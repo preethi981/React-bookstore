@@ -1,31 +1,17 @@
 pipeline {
-  agent any
-  stages{
-    stage('Build'){
-      steps{
-        echo "Building Project"
+    agent any
+   stages {    
+        
+      stage('SCM') {
+         steps {
+            git 'https://github.com/preethi981/React-bookstore.git'
+         }
+      } 
+        
+      stage('Build Project') {
+         steps {
+            sh '''
+            echo 'cd bookexplorer'
+            '''
+         }
       }
-    }
-      stage('Archive'){
-        steps{
-          echo "Archive Project"
-          archiveArtifacts artifacts: '**/*.jar', followSymlinks: false
-      }
-    }
-      stage('Build Docker Image'){
-        steps{
-          echo "Building Docker Image"
-      }
-    }
-      stage('Push Docker Image'){
-        steps{
-          echo "Pushing Docker Imaget"
-      }
-    }
-      stage('Deploy to Dev'){
-        steps{
-          echo "Deploying to Dev Environment"
-      }
-    }
-  }
-}
