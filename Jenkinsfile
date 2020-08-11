@@ -14,9 +14,9 @@ pipeline {
       stage('Build Project') {
          steps {
             sh label: '', script: '''
-                sudo su 
-                sudo npm install -y
-                sudo npm run build
+                sudo -s 
+                 npm install -y
+                 npm run build
             '''
          }
       }
@@ -24,7 +24,7 @@ pipeline {
         steps{
             sh label: '', script: '''
 
-            sudo docker build . -t bookkeepingimage .
+             docker build . -t bookkeepingimage .
             
              '''
            }
