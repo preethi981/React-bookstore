@@ -1,33 +1,32 @@
 pipeline {
-    agent any
-    
-     
-    
-   stages {    
-        
-      stage('SCM') {
-         steps {
-            git 'https://github.com/preethi981/React-bookstore.git/'
-         }
-      } 
-        
-      stage('Build Project') {
-         steps {
-            sh label: '', script: '''
-                sudo su 
-                sudo npm install -y
-                sudo npm run build
-            '''
-         }
+  agent any
+  stages{
+    stage('Build'){
+      steps{
+        echo "Building Project"
+        sh './mvnw package'
       }
-      stage('building docker image'){
-        steps{
-            sh label: '', script: '''
-
-            sudo docker build . -t bookkeepingimage .
-            
-             '''
-           }
     }
+      stage('Archive'){
+        steps{
+          echo "Archive Project"
+          archiveArtifacts artifacts: '**/*.jar', followSymlinks: false
       }
-   }
+    }
+      stage('Build Docker Image'){
+        steps{
+          echo "Building Docker Image"
+      }
+    }
+      stage('Push Docker Image'){
+        steps{
+          echo "Pushing Docker Imaget"
+      }
+    }
+      stage('Deploy to Dev'){
+        steps{
+          echo "Deploying to Dev Environment"
+      }
+    }
+  }
+}
