@@ -14,7 +14,7 @@ pipeline {
       stage('Build Project') {
          steps {
             sh label: '', script: '''
-                sudo -S 
+                sudo -s 
                  npm install -y
                  npm run build
             '''
